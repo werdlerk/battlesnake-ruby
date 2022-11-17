@@ -37,9 +37,7 @@ DEPENDENCIES
   json
   rack-contrib
   sinatra
-
-RUBY VERSION
-   ruby 2.7.6p219
+  webrick
 
 BUNDLED WITH
-   1.17.2
+   2.3.26
