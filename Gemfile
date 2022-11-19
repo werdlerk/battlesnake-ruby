@@ -5,3 +5,4 @@ gem 'json'
 gem 'rack-contrib'
 gem 'activesupport'
 gem 'webrick'
+gem 'rerun' # auto reload
