@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  battlesnake:
+    image: battlesnake:latest
+    container_name: battlesnake
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Amsterdam
+    ports:
+      - 4080:80
+
+networks:
+  default:
+    driver: bridge
+    name: battlesnake
