@@ -5,4 +5,5 @@ gem 'json'
 gem 'rack-contrib'
 gem 'activesupport'
 gem 'webrick'
+gem 'pathfinding'
 gem 'rerun' # auto reload
