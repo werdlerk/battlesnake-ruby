@@ -19,16 +19,16 @@ RUN rm -f /etc/service/nginx/down
 RUN rm /etc/nginx/sites-enabled/default
 ADD deploy/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 
-# Deploy application
-RUN setuser app mkdir /home/app/webapp
-COPY --chown=app:app . /home/app/webapp
-WORKDIR /home/app/webapp
-
 RUN setuser app gem install bundler --no-document \
    && setuser app bundle config set --local without 'development test' \
    && setuser app bundle config set --local deployment 'true' \
    && setuser app bundle config set --local jobs $(nproc) \
    && setuser app bundle install
+
+# Deploy application
+RUN setuser app mkdir /home/app/webapp
+COPY --chown=app:app . /home/app/webapp
+WORKDIR /home/app/webapp
 
 # Reset workdir
 WORKDIR /home/app
