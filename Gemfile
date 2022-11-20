@@ -6,7 +6,14 @@ gem 'rack-contrib'
 gem 'activesupport'
 gem 'pathfinding'
 
-# Use Passenger as app server:
-gem 'passenger'
+group :development do
+  # auto reload
+  gem 'rerun'
+  # WEBrick application server
+  gem 'webrick'
+end
 
-gem 'rerun' # auto reload
+group :production do
+  # Use Passenger as app server
+  gem 'passenger'
+end

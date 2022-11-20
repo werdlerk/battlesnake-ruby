@@ -2,6 +2,14 @@
 
 This is a basic implementation of the [Battlesnake API](https://docs.battlesnake.com/snake-api). It's a great starting point for anyone wanting to program their first Battlesnake using Ruby. It comes ready to deploy to [Heroku](https://heroku.com), although you can use other cloud providers if you'd like.
 
+
+# Setup locally
+```
+bundle config set --local without production
+bundle install
+./start.sh
+```
+
 ### Maintanance
 
 This is a community maintained Starter Project Battlesnake!

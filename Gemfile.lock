@@ -41,6 +41,7 @@ GEM
     tilt (2.0.10)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
+    webrick (1.7.0)
 
 PLATFORMS
   ruby
@@ -53,6 +54,7 @@ DEPENDENCIES
   rack-contrib
   rerun
   sinatra
+  webrick
 
 BUNDLED WITH
    2.3.26

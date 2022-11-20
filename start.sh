@@ -1,1 +1,1 @@
-bundle exec rerun "passenger start"
+bundle exec rerun "rackup config.ru -p 3000"
