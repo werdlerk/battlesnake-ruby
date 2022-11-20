@@ -37,6 +37,3 @@ COPY --chown=app:app . /home/app/webapp
 
 # Reset workdir
 WORKDIR /home/app
-
-HEALTHCHECK --start-period=10s \
-  CMD curl -f -s http://localhost/ || exit 1
