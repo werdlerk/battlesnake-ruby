@@ -1,6 +1,7 @@
 require 'rack'
 require 'rack/contrib'
 require 'sinatra'
+
 require './app/util'
 require './app/move'
 
@@ -10,11 +11,11 @@ use Rack::PostBodyContentTypeParser
 # TIP: If you open your Battlesnake URL in browser you should see this data
 get '/' do
   appearance = {
-    apiversion: "1",        
-    author: "",           # TODO: Your Battlesnake Username
-    color: "#888888",     # TODO: Personalize
-    head: "default",      # TODO: Personalize
-    tail: "default",      # TODO: Personalize
+    apiversion: "1",
+    author: "koen",           # TODO: Your Battlesnake Username
+    color: "#FF1122",     # TODO: Personalize
+    head: "evil",      # TODO: Personalize
+    tail: "flake",      # TODO: Personalize
   }
 
   camelcase(appearance).to_json
