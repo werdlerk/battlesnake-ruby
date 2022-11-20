@@ -3,3 +3,6 @@
 battlesnake
 .idea
 .vscode
+
+# Passenger files
+passenger.*

@@ -1,2 +1,2 @@
 require './app/app'
-run Sinatra::Application
+run BattleSnake
