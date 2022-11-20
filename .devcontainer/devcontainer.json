@@ -10,8 +10,28 @@
 		"vscode": {
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"rebornix.Ruby"
-			]
+				"rebornix.Ruby",
+				"EditorConfig.EditorConfig",
+	  		"patbenatar.advanced-new-file"
+			],
+			// Set *default* container specific settings.json values on container create.
+			"settings": {
+				"editor.formatOnSave": false,
+				"ruby.useBundler": true, //run non-lint commands with bundle exec
+				"ruby.useLanguageServer": true, // use the internal language server (see below)
+				"ruby.lint": {
+				"standard": true,
+				"reek": {
+					"useBundler": true // enable reek via bundler
+				}
+				},
+				"ruby.format": "standard",
+				"ruby.intellisense": "rubyLocate",
+				"ruby.codeCompletion": "rcodetools",
+				"emmet.includeLanguages": {
+				"erb": "html"
+				}
+			}
 		}
 	},
 
