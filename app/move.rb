@@ -65,6 +65,20 @@ def move(params)
     elsif behaviour_mode == MAZE_RUNNER
       move = possible_moves.shuffle.first
     elsif behaviour_mode == PATH_FINDING
+
+      if(params[:board][:food].size > 0)
+        matrix = build_matrix(params[:board][:width], params[:board][:height])
+        matrix = block_locations(matrix, params[:board][:snakes].map { |s| s[:body] })
+        matrix = block_locations(matrix, params[:board][:hazards])
+        matrix = open_locations(matrix, [{x: params[:you][:head][:x], y: params[:you][:head][:y]}])
+
+        # grid = Grid.new(matrix)
+        # start_node = grid.node(params[:you][:head][:x], params[:you][:head][:y])
+        # end_node = grid.node(foods.first[:x], foods.first[:y])
+
+        pp matrix.reverse.inspect
+      end
+
       move = possible_moves.sort_by { |move| move[:closest_food_distance] }.first
     elsif behaviour_mode == WARRIOR
       move = possible_moves.sort_by { |move| move[:closest_food_distance] }.first
@@ -91,4 +105,23 @@ def location_distance(x1, y1, x2, y2)
   diff_x = (x1 - x2).abs
   diff_y = (y1 - y2).abs
   diff_x + diff_y
+end
+
+def build_matrix(width, height)
+  Array.new(height) { Array.new(width) { 0 } }
+end
+
+def block_locations(matrix, locations)
+  set_locations(matrix, locations, 1)
+end
+
+def open_locations(matrix, locations)
+  set_locations(matrix, locations, 0)
+end
+
+def set_locations(matrix, locations, value)
+  locations.flatten.each do |location|
+    matrix[location[:y]][location[:x]] = value
+  end
+  matrix
 end
