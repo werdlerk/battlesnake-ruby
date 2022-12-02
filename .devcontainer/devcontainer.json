@@ -20,17 +20,15 @@
 				"ruby.useBundler": true, //run non-lint commands with bundle exec
 				"ruby.useLanguageServer": true, // use the internal language server (see below)
 				"ruby.lint": {
-				"standard": true,
-				"reek": {
-					"useBundler": true // enable reek via bundler
-				}
+          "reek": {
+            "useBundler": true // enable reek via bundler
+          }
 				},
-				"ruby.format": "standard",
+				"ruby.format": "rufo",
 				"ruby.intellisense": "rubyLocate",
 				"ruby.codeCompletion": "rcodetools",
-				"emmet.includeLanguages": {
-				"erb": "html"
-				}
+        "terminal.integrated.scrollback": 10000,
+        "files.autoSave": "onFocusChange"
 			}
 		}
 	},
