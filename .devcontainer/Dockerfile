@@ -26,3 +26,10 @@ ENV PATH=/usr/local/bundle/bin:$PATH
 
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
+
+# Install Ngrok
+RUN curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | \
+      tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && \
+      echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | \
+      tee /etc/apt/sources.list.d/ngrok.list && \
+      apt update && export DEBIAN_FRONTEND=noninteractive && apt -y install ngrok
