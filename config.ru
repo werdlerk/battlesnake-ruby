@@ -1,2 +1,2 @@
-require './app/app'
+require "./config/environment"
 run BattleSnake
