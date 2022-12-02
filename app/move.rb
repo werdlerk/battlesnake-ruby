@@ -95,6 +95,8 @@ def move(params)
     move = [{ command: "up" }, { command: "down" }, { command: "left" }, { command: "right" }].sample
   end
 
+  save_run_params(params[:game][:id], params[:turn], move[:command], env[Rack::RACK_REQUEST_FORM_INPUT].read, "json")
+
   puts "=> #{move[:command].upcase}"
   { "move" => move[:command], "shout" => "#{move[:x]},#{move[:y]}" }
 end
@@ -124,4 +126,12 @@ def set_locations(matrix, locations, value)
     matrix[location[:y]][location[:x]] = value
   end
   matrix
+end
+
+def save_run_params(run_id, turn_id, result, params, extension)
+  FileUtils.mkdir("runs") unless Dir.exists? "runs"
+  FileUtils.mkdir(File.join("runs", run_id)) unless Dir.exist? "./runs/#{run_id}"
+  File.open(File.join("runs", run_id, "#{turn_id}_#{result}.#{extension}"), "w") do |f|
+    f.write params
+  end
 end

@@ -3,6 +3,7 @@
 battlesnake
 .idea
 .vscode
+runs/*
 
 # Passenger files
 passenger.*
