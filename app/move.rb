@@ -13,7 +13,10 @@ WARRIOR = 9
 # Valid moves are "up", "down", "left", or "right".
 # TODO: Use the information in board to decide your next move.
 def move(params)
-  puts params
+  # puts params
+  # env[Rack::RACK_REQUEST_FORM_INPUT] # original params
+  # env[Rack::RACK_REQUEST_FORM_HASH] # json parsed params
+  # puts env[Rack::RACK_REQUEST_FORM_INPUT]
 
   possible_moves = [
     { command: "right", x: params[:you][:head][:x] + 1, y: params[:you][:head][:y] },
@@ -68,18 +71,29 @@ def move(params)
 
       if(params[:board][:food].size > 0)
         matrix = build_matrix(params[:board][:width], params[:board][:height])
-        matrix = block_locations(matrix, params[:board][:snakes].map { |s| s[:body] })
         matrix = block_locations(matrix, params[:board][:hazards])
+        matrix = block_locations(matrix, params[:board][:snakes].map { |s| s[:body] })
         matrix = open_locations(matrix, [{x: params[:you][:head][:x], y: params[:you][:head][:y]}])
 
-        # grid = Grid.new(matrix)
-        # start_node = grid.node(params[:you][:head][:x], params[:you][:head][:y])
-        # end_node = grid.node(foods.first[:x], foods.first[:y])
+        # Reverse the rows in the matrix as the Y-axis is different
+        grid = Grid.new(matrix.reverse)
+        start_node = grid.node(params[:you][:head][:x], params[:board][:height] - params[:you][:head][:y] - 1)
+        end_node = grid.node(foods.first[:x], params[:board][:height] - foods.first[:y] - 1)
+        # Do A* path finding
+        finder = AStarFinder.new()
+        path = finder.find_path(start_node, end_node, grid)
+        puts grid.to_s(path, start_node, end_node)
 
-        pp matrix.reverse.inspect
+        if path
+          # there is a path to the food
+          path_next = path[1]
+          move = possible_moves.find { |possible_move| possible_move[:x] == path_next.x && possible_move[:y] == (params[:board][:height] - path_next.y - 1) }
+        else
+          # no path to the food
+          move = possible_moves.sort_by { |move| move[:closest_food_distance] }.first
+        end
       end
 
-      move = possible_moves.sort_by { |move| move[:closest_food_distance] }.first
     elsif behaviour_mode == WARRIOR
       move = possible_moves.sort_by { |move| move[:closest_food_distance] }.first
     end
@@ -113,8 +127,8 @@ def build_matrix(width, height)
   Array.new(height) { Array.new(width) { 0 } }
 end
 
-def block_locations(matrix, locations)
-  set_locations(matrix, locations, 1)
+def block_locations(matrix, locations, value = 1)
+  set_locations(matrix, locations, value)
 end
 
 def open_locations(matrix, locations)
