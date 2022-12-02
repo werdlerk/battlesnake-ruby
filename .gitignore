@@ -6,3 +6,6 @@ battlesnake
 
 # Passenger files
 passenger.*
+
+# RSpec
+spec/examples.txt
