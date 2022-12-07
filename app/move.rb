@@ -15,9 +15,9 @@ WARRIOR = 9
 def move(params)
   possible_moves = [
     { command: "right", x: params[:you][:head][:x] + 1, y: params[:you][:head][:y] },
+    { command: "down",  x: params[:you][:head][:x], y: params[:you][:head][:y] - 1 },
     { command: "left",  x: params[:you][:head][:x] - 1, y: params[:you][:head][:y] },
     { command: "up",    x: params[:you][:head][:x], y: params[:you][:head][:y] + 1 },
-    { command: "down",  x: params[:you][:head][:x], y: params[:you][:head][:y] - 1 }
   ]
   previous_command, previous_position_x, previous_position_y = params[:you][:shout].split(",")
   ruleset = params[:game][:ruleset][:name]
@@ -63,7 +63,14 @@ def move(params)
 
   if possible_moves.size > 0
     if behaviour_mode == LONGEST_SNAKE
-      move = possible_moves.first
+      # repeat last move
+      move_order = %w[up right down left]
+      previous_command = move_order.first if previous_command.nil?
+      move = possible_moves.find { |pm| pm[:command] == previous_command }
+      while move.nil? && possible_moves.size > 0
+        next_move_order = move_order[move_order.index(previous_command) + 1] || move_order.first
+        move = possible_moves.find { |pm| pm[:command] == next_move_order }
+      end
     elsif behaviour_mode == MAZE_RUNNER
       move = possible_moves.shuffle.first
     elsif behaviour_mode == PATH_FINDING
