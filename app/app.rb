@@ -24,6 +24,8 @@ class BattleSnake < Sinatra::Base
   # TODO: Use this function to decide how your snake is going to look on the board.
   post '/start' do
     request = underscore(env['rack.request.form_hash'])
+    save_params("start", nil)
+
     puts "START"
     "OK\n"
   end
@@ -36,6 +38,8 @@ class BattleSnake < Sinatra::Base
 
     # Implement move logic in app/move.rb
     response = move(request)
+    save_params("move", response[:command])
+
     content_type :json
     camelcase(response).to_json
   end
@@ -43,7 +47,25 @@ class BattleSnake < Sinatra::Base
   # This function is called when a game your Battlesnake was in ends.
   # It's purely for informational purposes, you don't have to make any decisions here.
   post '/end' do
+    save_params("end", nil)
+
     puts "END"
     "OK\n"
+  end
+end
+
+def save_params(method, result, extension = "json")
+  params = underscore(env[Rack::RACK_REQUEST_FORM_HASH])
+  raw_params = env[Rack::RACK_REQUEST_FORM_INPUT].read
+  ruleset_name = params[:game][:ruleset][:name]
+  map_name = params[:game][:map]
+  game_id = params[:game][:id]
+  turn_id = params[:turn]
+  dir_name = "#{ruleset_name}_#{map_name}_#{game_id}"
+
+  FileUtils.mkdir("runs") unless Dir.exists? "runs"
+  FileUtils.mkdir(File.join("runs", dir_name)) unless Dir.exist? "./runs/#{dir_name}"
+  File.open(File.join("runs", dir_name, "#{method}_#{turn_id}_#{result}.#{extension}"), "w") do |f|
+    f.write raw_params
   end
 end
