@@ -1,0 +1,110 @@
+{
+  "game": {
+    "id": "86019da5-fa46-4363-b130-3c5095aa135c",
+    "ruleset": {
+      "name": "solo",
+      "version": "v1.2.0",
+      "settings": {
+        "foodSpawnChance": 15,
+        "minimumFood": 1,
+        "hazardDamagePerTurn": 0,
+        "hazardMap": "",
+        "hazardMapAuthor": "",
+        "royale": {
+          "shrinkEveryNTurns": 0
+        },
+        "squad": {
+          "allowBodyCollisions": false,
+          "sharedElimination": false,
+          "sharedHealth": false,
+          "sharedLength": false
+        }
+      }
+    },
+    "map": "standard",
+    "timeout": 500,
+    "source": "challenge"
+  },
+  "turn": 0,
+  "board": {
+    "height": 7,
+    "width": 7,
+    "snakes": [
+      {
+        "id": "gs_x3jGD6JDMqh9vcBXwTdBjFJ3",
+        "name": "Koengrok",
+        "latency": "",
+        "health": 100,
+        "body": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "head": {
+          "x": 1,
+          "y": 1
+        },
+        "length": 3,
+        "shout": "",
+        "squad": "",
+        "customizations": {
+          "color": "#ff1122",
+          "head": "evil",
+          "tail": "flake"
+        }
+      }
+    ],
+    "food": [
+      {
+        "x": 0,
+        "y": 2
+      },
+      {
+        "x": 3,
+        "y": 3
+      }
+    ],
+    "hazards": []
+  },
+  "you": {
+    "id": "gs_x3jGD6JDMqh9vcBXwTdBjFJ3",
+    "name": "Koengrok",
+    "latency": "",
+    "health": 100,
+    "body": [
+      {
+        "x": 1,
+        "y": 1
+      },
+      {
+        "x": 1,
+        "y": 1
+      },
+      {
+        "x": 1,
+        "y": 1
+      }
+    ],
+    "head": {
+      "x": 1,
+      "y": 1
+    },
+    "length": 3,
+    "shout": "",
+    "squad": "",
+    "customizations": {
+      "color": "#ff1122",
+      "head": "evil",
+      "tail": "flake"
+    }
+  }
+}

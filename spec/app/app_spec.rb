@@ -34,8 +34,25 @@ RSpec.describe "BattleSnake" do
 
         expect(JSON.parse(last_response.body)).to include({"move" => "up"})
       end
-
     end
+  end
 
+  context "wrapped field" do
+    it "allows moving outside of board" do
+      params = File.read("./spec/app/params_wrap_to_other_side.json")
+      post "/move", params, 'CONTENT_TYPE' => 'application/json'
+
+      expect(JSON.parse(last_response.body)).to include({"move" => "up"})
+    end
+  end
+
+  context "test" do
+
+    it "works" do
+      params = File.read("./spec/app/params_solo_standard.json")
+      post "/move", params, 'CONTENT_TYPE' => 'application/json'
+
+      expect(JSON.parse(last_response.body)).to include({"move" => "up"})
+    end
   end
 end
