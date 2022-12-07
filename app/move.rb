@@ -111,7 +111,7 @@ def move(params)
     # end
 
   else possible_moves.size == 0
-    # we're fucked
+    puts "we're fucked"
     move = [{ command: "up" }, { command: "down" }, { command: "left" }, { command: "right" }].sample
   end
 
