@@ -19,7 +19,7 @@ def move(params)
     { command: "up",    x: params[:you][:head][:x], y: params[:you][:head][:y] + 1 },
     { command: "down",  x: params[:you][:head][:x], y: params[:you][:head][:y] - 1 }
   ]
-  previous_position_x, previous_position_y = params[:you][:shout].split(",")
+  previous_command, previous_position_x, previous_position_y = params[:you][:shout].split(",")
   ruleset = params[:game][:ruleset][:name]
   ruleset_food_spawn_chance = params[:game][:ruleset][:settings][:food_spawn_chance]
   ruleset_minimum_food = params[:game][:ruleset][:settings][:minimum_food]
@@ -105,7 +105,7 @@ def move(params)
   end
 
   puts "=> #{move[:command].upcase}"
-  { "move" => move[:command], "shout" => "#{move[:x]},#{move[:y]}" }
+  { "move" => move[:command], "shout" => "#{move[:command]},#{move[:x]},#{move[:y]}" }
 end
 
 
