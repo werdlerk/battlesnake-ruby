@@ -34,7 +34,7 @@ def move(params)
 
   possible_moves.reject! do |possible_move|
     # Do not move outside board
-    (ruleset == "wrapped" && (possible_move[:x] < 0 || possible_move[:x] >= params[:board][:width] || possible_move[:y] < 0 || possible_move[:y] >= params[:board][:height])) ||
+    (ruleset != "wrapped" && (possible_move[:x] < 0 || possible_move[:x] >= params[:board][:width] || possible_move[:y] < 0 || possible_move[:y] >= params[:board][:height])) ||
     # Do not move onto another snake
     params[:board][:snakes].find { |snake| snake[:body].include?({x: possible_move[:x], y: possible_move[:y]}) } ||
     # Do not move onto hazards
