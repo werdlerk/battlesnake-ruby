@@ -13,11 +13,6 @@ WARRIOR = 9
 # Valid moves are "up", "down", "left", or "right".
 # TODO: Use the information in board to decide your next move.
 def move(params)
-  # puts params
-  # env[Rack::RACK_REQUEST_FORM_INPUT] # original params
-  # env[Rack::RACK_REQUEST_FORM_HASH] # json parsed params
-  # puts env[Rack::RACK_REQUEST_FORM_INPUT]
-
   possible_moves = [
     { command: "right", x: params[:you][:head][:x] + 1, y: params[:you][:head][:y] },
     { command: "left",  x: params[:you][:head][:x] - 1, y: params[:you][:head][:y] },
