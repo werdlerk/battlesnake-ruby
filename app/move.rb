@@ -27,7 +27,11 @@ def move(params)
   if ruleset == "wrapped"
     behaviour_mode = MAZE_RUNNER
   elsif ruleset == "solo" && (ruleset_food_spawn_chance > 0 || ruleset_minimum_food > 0)
-    behaviour_mode = PATH_FINDING
+    if params[:board][:hazards].length > 0
+      behaviour_mode = PATH_FINDING
+    else
+      behaviour_mode = LONGEST_SNAKE
+    end
   else
     behaviour_mode = WARRIOR
   end
