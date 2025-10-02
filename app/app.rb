@@ -1,8 +1,13 @@
+require 'rack'
+require 'rack/contrib'
+require 'sinatra'
 require './app/util'
 require './app/move'
 
 class BattleSnake < Sinatra::Base
   use Rack::JSONBodyParser
+
+  set :host_authorization, permitted_hosts: []
 
   # This function is called when you register your Battlesnake on play.battlesnake.com
   # It controls your Battlesnake appearance and author permissions.
