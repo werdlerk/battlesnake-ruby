@@ -63,7 +63,7 @@ def save_params(method, result, extension = "json")
   turn_id = params[:turn]
   dir_name = "#{ruleset_name}_#{map_name}_#{game_id}"
 
-  FileUtils.mkdir("runs") unless Dir.exists? "runs"
+  FileUtils.mkdir("runs") unless Dir.exist? "runs"
   FileUtils.mkdir(File.join("runs", dir_name)) unless Dir.exist? "./runs/#{dir_name}"
   File.open(File.join("runs", dir_name, "#{method}_#{turn_id}_#{result}.#{extension}"), "w") do |f|
     f.write raw_params
