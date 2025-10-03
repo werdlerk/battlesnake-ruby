@@ -33,7 +33,8 @@ def move(params)
       behaviour_mode = LONGEST_SNAKE
     end
   else
-    behaviour_mode = WARRIOR
+    # behaviour_mode = WARRIOR
+    behaviour_mode = PATH_FINDING
   end
 
   possible_moves.reject! do |possible_move|
