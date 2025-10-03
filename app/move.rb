@@ -85,7 +85,17 @@ def move(params)
         # Reverse the rows in the matrix as the Y-axis is different
         grid = Grid.new(matrix.reverse)
         start_node = grid.node(params[:you][:head][:x], params[:board][:height] - params[:you][:head][:y] - 1)
-        end_node = grid.node(foods.first[:x], params[:board][:height] - foods.first[:y] - 1)
+
+        # closest food
+        closest_foods_to_me = foods.map do |food|
+          food[:distance] = location_distance(params[:you][:head][:x], params[:you][:head][:y], food[:x], food[:y])
+          food
+        end
+        closest_food_to_me = closest_foods_to_me.sort_by { |food| food[:distance] }.first
+        end_node = grid.node(closest_food_to_me[:x], params[:board][:height] - closest_food_to_me[:y] - 1)
+
+        # end_node = grid.node(foods.first[:x], params[:board][:height] - foods.first[:y] - 1)
+
         # Do A* path finding
         finder = AStarFinder.new()
         path = finder.find_path(start_node, end_node, grid)
