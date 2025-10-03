@@ -3,6 +3,7 @@ require 'rack/contrib'
 require 'sinatra'
 require './app/util'
 require './app/move'
+require 'debug'
 
 class BattleSnake < Sinatra::Base
   use Rack::JSONBodyParser
@@ -61,7 +62,6 @@ end
 
 def save_params(method, result, extension = "json")
   params = underscore(env[Rack::RACK_REQUEST_FORM_HASH])
-  raw_params = env[Rack::RACK_REQUEST_FORM_INPUT].read
   ruleset_name = params[:game][:ruleset][:name]
   map_name = params[:game][:map]
   game_id = params[:game][:id]
@@ -71,6 +71,6 @@ def save_params(method, result, extension = "json")
   FileUtils.mkdir("runs") unless Dir.exist? "runs"
   FileUtils.mkdir(File.join("runs", dir_name)) unless Dir.exist? "./runs/#{dir_name}"
   File.open(File.join("runs", dir_name, "#{method}_#{turn_id}_#{result}.#{extension}"), "w") do |f|
-    f.write raw_params
+    f.write params.to_json
   end
 end
