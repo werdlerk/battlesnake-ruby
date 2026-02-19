@@ -15,10 +15,10 @@ class BattleSnake < Sinatra::Base
   get '/' do
     appearance = {
       apiversion: "1",
-      author: "koen",           # TODO: Your Battlesnake Username
-      color: "#FF1122",     # TODO: Personalize
-      head: "evil",      # TODO: Personalize
-      tail: "flake",      # TODO: Personalize
+      author: "koen",
+      color: "#C0C0C0",
+      head: "crystal-power",
+      tail: "crystal-power",
     }
 
     camelcase(appearance).to_json
