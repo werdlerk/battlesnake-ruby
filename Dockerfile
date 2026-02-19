@@ -1,6 +1,10 @@
 # See https://github.com/phusion/passenger-docker/blob/master/CHANGELOG.md for
 FROM phusion/passenger-ruby31:2.3.1-arm64
 
+# New signing key for Passenger since February 2026 (https://blog.phusion.nl/important-new-signing-key-for-passenger/)
+# Please remove when this Dockerfile uses version 3.1.6 or newer.
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D870AB033FB45BD1
+
 # Set correct environment variables.
 ENV HOME /root
 
