@@ -1,5 +1,5 @@
 # See https://github.com/phusion/passenger-docker/blob/master/CHANGELOG.md for
-FROM phusion/passenger-ruby31:2.3.1
+FROM phusion/passenger-ruby31:2.3.1-arm64
 
 # Set correct environment variables.
 ENV HOME /root
