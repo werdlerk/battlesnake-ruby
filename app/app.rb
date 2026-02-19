@@ -3,7 +3,6 @@ require 'rack/contrib'
 require 'sinatra'
 require './app/util'
 require './app/move'
-require 'debug'
 
 class BattleSnake < Sinatra::Base
   use Rack::JSONBodyParser
