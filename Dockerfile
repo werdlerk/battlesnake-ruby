@@ -1,5 +1,5 @@
 # See https://github.com/phusion/passenger-docker/blob/master/CHANGELOG.md for
-FROM phusion/passenger-ruby31:2.3.1-arm64
+FROM phusion/passenger-ruby34:3.1.4
 
 # New signing key for Passenger since February 2026 (https://blog.phusion.nl/important-new-signing-key-for-passenger/)
 # Please remove when this Dockerfile uses version 3.1.6 or newer.
