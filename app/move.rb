@@ -99,7 +99,7 @@ def move(params)
         # Do A* path finding
         finder = AStarFinder.new()
         path = finder.find_path(start_node, end_node, grid)
-        puts grid.to_s(path, start_node, end_node)
+        # puts grid.to_s(path, start_node, end_node)
 
         if path
           # there is a path to the food
