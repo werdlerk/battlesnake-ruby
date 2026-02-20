@@ -31,7 +31,7 @@ class BattleSnake < Sinatra::Base
     request = underscore(env['rack.request.form_hash'])
     save_params("start", nil)
 
-    puts "START"
+    puts "START - https://play.battlesnake.com/game/#{request[:game][:id]}"
     "OK\n"
   end
 
