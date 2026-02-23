@@ -46,8 +46,9 @@ def move(params)
       params[:board][:hazards].include?({ x: possible_move[:x], y: possible_move[:y] }) ||
       # Do not move into opposite direction or previous direction
       (possible_move[:x] == previous_position_x && possible_move[:y] == previous_position_y) ||
-      # Do not move onto another snake's body (except opponent head when we are longer or equal)
+      # Do not move onto another snake's body (excluding the tail)
       params[:board][:snakes].any? { |snake| snake[:body][0...-1].include?({ x: possible_move[:x], y: possible_move[:y] }) } ||
+      # Do not move into opponent's head when they're longer or equal size
       begin
         opponent = params[:board][:snakes].find do |snake|
           next false if snake[:id] == params[:you][:id]
@@ -62,7 +63,6 @@ def move(params)
           opponent_possible_heads.any? { |pos| pos[:x] == possible_move[:x] && pos[:y] == possible_move[:y] }
         end
 
-        # Allow head-to-head if we are longer or equal (we win or tie)
         opponent && opponent[:body].length >= my_body_length
       end
   end
