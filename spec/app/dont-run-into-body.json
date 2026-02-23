@@ -1,0 +1,222 @@
+{
+  "game": {
+    "id": "24c6eccf-28e3-4b03-818a-e7ae4bb0c2e6",
+    "ruleset": {
+      "name": "standard",
+      "version": "v1.2.3",
+      "settings": {
+        "food_spawn_chance": 15,
+        "minimum_food": 1,
+        "hazard_damage_per_turn": 0,
+        "hazard_map": "",
+        "hazard_map_author": "",
+        "royale": {
+          "shrink_every_n_turns": 0
+        },
+        "squad": {
+          "allow_body_collisions": false,
+          "shared_elimination": false,
+          "shared_health": false,
+          "shared_length": false
+        }
+      }
+    },
+    "map": "standard",
+    "timeout": 500,
+    "source": "ladder"
+  },
+  "turn": 60,
+  "board": {
+    "height": 11,
+    "width": 11,
+    "snakes": [
+      {
+        "id": "gs_vFvtXqQPmRvhVfC8PfWyYdD4",
+        "name": "Zilverline.com",
+        "latency": "14",
+        "health": 92,
+        "body": [
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 7
+          },
+          {
+            "x": 2,
+            "y": 7
+          },
+          {
+            "x": 1,
+            "y": 7
+          },
+          {
+            "x": 0,
+            "y": 7
+          },
+          {
+            "x": 0,
+            "y": 6
+          }
+        ],
+        "head": {
+          "x": 3,
+          "y": 1
+        },
+        "length": 11,
+        "shout": "down,3,1",
+        "squad": "",
+        "customizations": {
+          "color": "#c0c0c0",
+          "head": "crystal-power",
+          "tail": "crystal-power"
+        }
+      },
+      {
+        "id": "gs_8dp6SrHbtPw8cqcBdPK7x9cH",
+        "name": "liquid_snake",
+        "latency": "36",
+        "health": 99,
+        "body": [
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 7
+          }
+        ],
+        "head": {
+          "x": 4,
+          "y": 0
+        },
+        "length": 8,
+        "shout": "",
+        "squad": "",
+        "customizations": {
+          "color": "#0096ff",
+          "head": "beluga",
+          "tail": "do-sammy"
+        }
+      }
+    ],
+    "food": [
+      {
+        "x": 9,
+        "y": 9
+      }
+    ],
+    "hazards": []
+  },
+  "you": {
+    "id": "gs_vFvtXqQPmRvhVfC8PfWyYdD4",
+    "name": "Zilverline.com",
+    "latency": "14",
+    "health": 92,
+    "body": [
+      {
+        "x": 3,
+        "y": 1
+      },
+      {
+        "x": 3,
+        "y": 2
+      },
+      {
+        "x": 3,
+        "y": 3
+      },
+      {
+        "x": 3,
+        "y": 4
+      },
+      {
+        "x": 3,
+        "y": 5
+      },
+      {
+        "x": 3,
+        "y": 6
+      },
+      {
+        "x": 3,
+        "y": 7
+      },
+      {
+        "x": 2,
+        "y": 7
+      },
+      {
+        "x": 1,
+        "y": 7
+      },
+      {
+        "x": 0,
+        "y": 7
+      },
+      {
+        "x": 0,
+        "y": 6
+      }
+    ],
+    "head": {
+      "x": 3,
+      "y": 1
+    },
+    "length": 11,
+    "shout": "down,3,1",
+    "squad": "",
+    "customizations": {
+      "color": "#c0c0c0",
+      "head": "crystal-power",
+      "tail": "crystal-power"
+    }
+  }
+}
