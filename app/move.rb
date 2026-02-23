@@ -63,7 +63,7 @@ def move(params)
 
         if opponent
           # Allow head-to-head if we are longer or equal (we win or tie)
-          opponent[:body].length > my_body_length
+          opponent[:body].length >= my_body_length
         else
           # Block any other snake body collision
           params[:board][:snakes].any? { |snake| snake[:body].include?({ x: possible_move[:x], y: possible_move[:y] }) }
