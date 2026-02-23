@@ -1,8 +1,8 @@
 OPPOSITE_DIRECTIONS = {
-  "right" => "left",
-  "left" => "right",
-  "up" => "down",
-  "down" => "up"
+  'right' => 'left',
+  'left' => 'right',
+  'up' => 'down',
+  'down' => 'up'
 }
 MAZE_RUNNER = 0
 PATH_FINDING = 1
@@ -14,38 +14,55 @@ WARRIOR = 9
 # TODO: Use the information in board to decide your next move.
 def move(params)
   possible_moves = [
-    { command: "right", x: params[:you][:head][:x] + 1, y: params[:you][:head][:y] },
-    { command: "down",  x: params[:you][:head][:x], y: params[:you][:head][:y] - 1 },
-    { command: "left",  x: params[:you][:head][:x] - 1, y: params[:you][:head][:y] },
-    { command: "up",    x: params[:you][:head][:x], y: params[:you][:head][:y] + 1 },
+    { command: 'right', x: params[:you][:head][:x] + 1, y: params[:you][:head][:y] },
+    { command: 'down', x: params[:you][:head][:x], y: params[:you][:head][:y] - 1 },
+    { command: 'left', x: params[:you][:head][:x] - 1, y: params[:you][:head][:y] },
+    { command: 'up', x: params[:you][:head][:x], y: params[:you][:head][:y] + 1 }
   ]
-  previous_command, previous_position_x, previous_position_y = params[:you][:shout].split(",")
+  previous_command, previous_position_x, previous_position_y = params[:you][:shout].split(',')
   ruleset = params[:game][:ruleset][:name]
   ruleset_food_spawn_chance = params[:game][:ruleset][:settings][:food_spawn_chance]
   ruleset_minimum_food = params[:game][:ruleset][:settings][:minimum_food]
 
-  if ruleset == "wrapped"
-    behaviour_mode = MAZE_RUNNER
-  elsif ruleset == "solo" && (ruleset_food_spawn_chance > 0 || ruleset_minimum_food > 0)
-    if params[:board][:hazards].length > 0
-      behaviour_mode = PATH_FINDING
-    else
-      behaviour_mode = LONGEST_SNAKE
-    end
-  else
-    # behaviour_mode = WARRIOR
-    behaviour_mode = PATH_FINDING
-  end
+  behaviour_mode = if ruleset == 'wrapped'
+                     MAZE_RUNNER
+                   elsif ruleset == 'solo' && (ruleset_food_spawn_chance > 0 || ruleset_minimum_food > 0)
+                     if params[:board][:hazards].length > 0
+                       PATH_FINDING
+                     else
+                       LONGEST_SNAKE
+                     end
+                   else
+                     # behaviour_mode = WARRIOR
+                     PATH_FINDING
+                   end
+
+  my_body_length = params[:you][:body].length
 
   possible_moves.reject! do |possible_move|
     # Do not move outside board
-    (ruleset != "wrapped" && (possible_move[:x] < 0 || possible_move[:x] >= params[:board][:width] || possible_move[:y] < 0 || possible_move[:y] >= params[:board][:height])) ||
-    # Do not move onto another snake
-    params[:board][:snakes].find { |snake| snake[:body].include?({x: possible_move[:x], y: possible_move[:y]}) } ||
-    # Do not move onto hazards
-    params[:board][:hazards].include?({x: possible_move[:x], y: possible_move[:y]}) ||
-    # Do not move into opposite direction of previous direction
-    (possible_move[:x] == previous_position_x && possible_move[:y] == previous_position_y)
+    (ruleset != 'wrapped' && (possible_move[:x] < 0 || possible_move[:x] >= params[:board][:width] || possible_move[:y] < 0 || possible_move[:y] >= params[:board][:height])) ||
+      # Do not move onto hazards
+      params[:board][:hazards].include?({ x: possible_move[:x], y: possible_move[:y] }) ||
+      # Do not move into opposite direction of previous direction
+      (possible_move[:x] == previous_position_x && possible_move[:y] == previous_position_y) ||
+      # Do not move onto another snake's body (except opponent head when we are longer or equal)
+      begin
+        opponent = params[:board][:snakes].find do |snake|
+          next false if snake[:id] == params[:you][:id]
+
+          head = snake[:body].first
+          head[:x] == possible_move[:x] && head[:y] == possible_move[:y]
+        end
+
+        if opponent
+          # Allow head-to-head if we are longer or equal (we win or tie)
+          opponent[:body].length > my_body_length
+        else
+          # Block any other snake body collision
+          params[:board][:snakes].any? { |snake| snake[:body].include?({ x: possible_move[:x], y: possible_move[:y] }) }
+        end
+      end
   end
 
   foods = params[:board][:food]
@@ -73,14 +90,14 @@ def move(params)
         move = possible_moves.find { |pm| pm[:command] == next_move_order }
       end
     elsif behaviour_mode == MAZE_RUNNER
-      move = possible_moves.shuffle.first
+      move = possible_moves.sample
     elsif behaviour_mode == PATH_FINDING
 
-      if(params[:board][:food].size > 0)
+      if params[:board][:food].size > 0
         matrix = build_matrix(params[:board][:width], params[:board][:height])
         matrix = block_locations(matrix, params[:board][:hazards])
         matrix = block_locations(matrix, params[:board][:snakes].map { |s| s[:body] })
-        matrix = open_locations(matrix, [{x: params[:you][:head][:x], y: params[:you][:head][:y]}])
+        matrix = open_locations(matrix, [{ x: params[:you][:head][:x], y: params[:you][:head][:y] }])
 
         # Reverse the rows in the matrix as the Y-axis is different
         grid = Grid.new(matrix.reverse)
@@ -97,14 +114,16 @@ def move(params)
         # end_node = grid.node(foods.first[:x], params[:board][:height] - foods.first[:y] - 1)
 
         # Do A* path finding
-        finder = AStarFinder.new()
+        finder = AStarFinder.new
         path = finder.find_path(start_node, end_node, grid)
         # puts grid.to_s(path, start_node, end_node)
 
         if path
           # there is a path to the food
           path_next = path[1]
-          move = possible_moves.find { |possible_move| possible_move[:x] == path_next.x && possible_move[:y] == (params[:board][:height] - path_next.y - 1) }
+          move = possible_moves.find do |possible_move|
+            possible_move[:x] == path_next.x && possible_move[:y] == (params[:board][:height] - path_next.y - 1)
+          end
         else
           # no path to the food
           move = possible_moves.sort_by { |move| move[:closest_food_distance] }.first
@@ -121,18 +140,19 @@ def move(params)
     #   move = possible_moves.shuffle.first
     # end
 
-  else possible_moves.size == 0
+  else
+    possible_moves.size
     puts "we're fucked"
-    move = [{ command: "up" }, { command: "down" }, { command: "left" }, { command: "right" }].sample
+    move = [{ command: 'up' }, { command: 'down' }, { command: 'left' }, { command: 'right' }].sample
   end
 
   puts "=> #{move[:command].upcase}"
-  { "move" => move[:command], "shout" => "#{move[:command]},#{move[:x]},#{move[:y]}" }
+  { 'move' => move[:command], 'shout' => "#{move[:command]},#{move[:x]},#{move[:y]}" }
 end
-
 
 def location_distance(x1, y1, x2, y2)
   return 0 if x1.nil? || y1.nil? || x2.nil? || y2.nil?
+
   diff_x = (x1 - x2).abs
   diff_y = (y1 - y2).abs
   diff_x + diff_y
@@ -156,5 +176,3 @@ def set_locations(matrix, locations, value)
   end
   matrix
 end
-
-
