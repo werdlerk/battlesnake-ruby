@@ -16,6 +16,10 @@ RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 # Clean up APT when done
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Disable nginx-log-forwarder
+RUN touch /etc/service/nginx-log-forwarder/down && \
+    sed -i '/nginx-log-forwarder/d' /etc/service/nginx/run
+
 # Enable Nginx and Passenger
 RUN rm -f /etc/service/nginx/down
 
