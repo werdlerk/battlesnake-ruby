@@ -52,7 +52,13 @@ def move(params)
           next false if snake[:id] == params[:you][:id]
 
           head = snake[:body].first
-          head[:x] == possible_move[:x] && head[:y] == possible_move[:y]
+          opponent_possible_heads = [
+            { x: head[:x] + 1, y: head[:y] },
+            { x: head[:x] - 1, y: head[:y] },
+            { x: head[:x], y: head[:y] + 1 },
+            { x: head[:x], y: head[:y] - 1 }
+          ]
+          opponent_possible_heads.any? { |pos| pos[:x] == possible_move[:x] && pos[:y] == possible_move[:y] }
         end
 
         if opponent
@@ -124,8 +130,10 @@ def move(params)
           move = possible_moves.find do |possible_move|
             possible_move[:x] == path_next.x && possible_move[:y] == (params[:board][:height] - path_next.y - 1)
           end
-        else
-          # no path to the food
+        end
+
+        if !path || !move
+          # no path to the food or no possible move on path to food
           move = possible_moves.sort_by { |move| move[:closest_food_distance] }.first
         end
       end

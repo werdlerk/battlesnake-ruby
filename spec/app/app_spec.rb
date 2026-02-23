@@ -55,4 +55,13 @@ RSpec.describe "BattleSnake" do
       expect(JSON.parse(last_response.body)).to include({"move" => "up"})
     end
   end
+
+  context 'head-to-head' do
+    it "avoids" do
+      params = File.read("./spec/app/should_avoid.json")
+      post "/move", params, 'CONTENT_TYPE' => 'application/json'
+
+      expect(JSON.parse(last_response.body)).to include({"move" => "down"})
+    end
+  end
 end
