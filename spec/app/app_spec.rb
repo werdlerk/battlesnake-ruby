@@ -73,4 +73,13 @@ RSpec.describe "BattleSnake" do
       expect(JSON.parse(last_response.body)).to include({"move" => "down"})
     end
   end
+
+  context 'got into a dead end' do
+    it 'take location of tail' do
+      params = File.read("./spec/app/dead-end.json")
+      post "/move", params, 'CONTENT_TYPE' => 'application/json'
+
+      expect(JSON.parse(last_response.body)).to include({"move" => "up"})
+    end
+  end
 end

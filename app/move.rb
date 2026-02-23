@@ -44,10 +44,10 @@ def move(params)
     (ruleset != 'wrapped' && (possible_move[:x] < 0 || possible_move[:x] >= params[:board][:width] || possible_move[:y] < 0 || possible_move[:y] >= params[:board][:height])) ||
       # Do not move onto hazards
       params[:board][:hazards].include?({ x: possible_move[:x], y: possible_move[:y] }) ||
-      # Do not move into opposite direction of previous direction
+      # Do not move into opposite direction or previous direction
       (possible_move[:x] == previous_position_x && possible_move[:y] == previous_position_y) ||
       # Do not move onto another snake's body (except opponent head when we are longer or equal)
-      params[:board][:snakes].any? { |snake| snake[:body].include?({ x: possible_move[:x], y: possible_move[:y] }) } ||
+      params[:board][:snakes].any? { |snake| snake[:body][0...-1].include?({ x: possible_move[:x], y: possible_move[:y] }) } ||
       begin
         opponent = params[:board][:snakes].find do |snake|
           next false if snake[:id] == params[:you][:id]
